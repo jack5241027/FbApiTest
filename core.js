@@ -3,7 +3,7 @@
 (function(){
 
     var appId = '1497988213797987';
-    var url = 'http://localhost/FaceBookApiTest/index.html';
+    var url = 'http://localhost/FbApiTest/index.html';
 
     FB.init({
 	appId:appId,
