@@ -2,7 +2,7 @@
 
 (function(){
 
-    var appId = '1497988213797987';
+    var appId = '1052783271416275';
     var url = 'http://localhost/FbApiTest/index.html';
 
     FB.init({
