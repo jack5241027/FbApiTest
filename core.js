@@ -9,7 +9,7 @@
             xfbml: true,
             version: 'v2.3'
         });
-        
+
     };
 
     (function(d, s, id) {
@@ -23,7 +23,7 @@
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
-    function getMeFriends() {
+    function getFriends() {
         //taggable_friends
         FB.api('/me/taggable_friends', function(response) {
             var htmlData = "";
@@ -60,11 +60,10 @@
                 htmlData += "</pre>";
             }
             $('#tab2').html(htmlData);
-
         });
     }
 
-    function getMeFeed() {
+    function getMyFeeds() {
         FB.api('/me/Feed', function(response) {
             var htmlData = "";
             for (var key in response.data) {
@@ -79,6 +78,41 @@
 
     }
 
+    function testAPI() {
+        console.log('Welcome!  Fetching your information.... ');
+        FB.api('/me', function(response) {
+            console.log('Successful login for: ' + response.name);
+            $('#tab2').text('Thanks for logging in, ' + response.name + '!');
+        });
+    }
 
+    $('#logInFB').click(function() {
+        FB.getLoginStatus(function(response) {
+            if (response.status === 'connected') {
+                console.log('Logged in.');
+            } else {
+                FB.login();
+            }
+        });
+    })
+
+    $('#getMe').click(function() {
+        FB.getLoginStatus(function(response) {
+            // testAPI(response);
+            getMe(response);
+        });
+    });
+
+    $('#getFriends').click(function() {
+        FB.getLoginStatus(function(response) {
+            getFriends(response);
+        });
+    });
+
+    $('#getMyFeeds').click(function() {
+        FB.getLoginStatus(function(response) {
+            getMyFeeds(response);
+        });
+    });
 
 })();

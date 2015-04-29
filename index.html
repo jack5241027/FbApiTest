@@ -9,10 +9,11 @@
 <body>
     <div class="tabs">
         <ul class="tab-links">
-            <li><a href="#tab1">Get Friends</a></li>
-            <li><a href="#tab2">Me</a></li>
-            <li class="active"><a href="#tab3">MeFeeds</a></li>
-            <li><a href="#tab4">Tab #4</a></li>
+            <li><a  id="getFriends" href="#tab1">Get Friends</a></li>
+            <li><a id="getMe" href="#tab2">Me</a></li>
+            <li class="active"><a id="getMyFeeds" href="#tab3">MeFeeds</a></li>
+            <li><a id=" " href="#tab4">Tab #4</a></li>
+            <li><button id="logInFB">LogIn</button></li>
         </ul>
         <div class="tab-content">
             <div id="tab1" class="tab active">
@@ -47,16 +48,15 @@
                 <p>Tab #4 content goes here!</p>
             </div>
         </div>
-        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-        </fb:login-button>
-        <div id="status">
-        </div>
     </div>
     <!--js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js" charset="utf-8"></script>
     <!-- <script type="text/javascript" src="http://connect.facebook.net/zh_TW/all.js" charset="utf-8"></script> -->
-    <script type="text/javascript" src="testLogin.js" charset="utf-8"></script>
-    <script type="text/javascript" src="js/tab.js"charset="utf-8">	</script>
+    <!-- <script type="text/javascript" src="testLogin.js" charset="utf-8"></script> -->
+    <script type="text/javascript" src="facebook.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/tab.js"charset="utf-8">  </script>
+    <script type="text/javascript" src="main.js" charset="utf-8"></script>
+    
 </body>
 
 </html>
