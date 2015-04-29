@@ -1,6 +1,7 @@
 $(document).ready(function() {
+
     $('#logInFB').click(function() {
-    	FBHUB.logIn();
+    	FBHUB.logIn(true);
     })
 
     $('#getMe').click(function() {
@@ -8,6 +9,5 @@ $(document).ready(function() {
             FBHUB.getme(response);
         });
     });
-
 
 });
