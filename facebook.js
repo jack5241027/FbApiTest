@@ -1,12 +1,12 @@
 var fbHub = {
     init: function() {
         // window.fbAsyncInit = function() {
-            FB.init({
-                appId: '609847775785632',
-                xfbml: true,
-                version: 'v2.3'
-            });
-            fbHub.logIn();
+        FB.init({
+            appId: '609847775785632',
+            xfbml: true,
+            version: 'v2.3'
+        });
+        fbHub.logIn();
         // };
         // (function(d, s, id) {
         //     var js, fjs = d.getElementsByTagName(s)[0];
@@ -34,12 +34,12 @@ var fbHub = {
                 } else if (router) {
                     alert('提醒，執行所有功能都要登入喔!!')
                 } else if (getIn) {
-                    FB.login();
+                    FB.login(function(response) { }, { scope: 'user_posts', return_scopes: true });
                 } else {
                     var res = confirm('你還沒登入喔!要幫你導向嗎?');
                     if (res) {
                         router = true;
-                        FB.login(fbHub.logIn);
+                        FB.login(fbHub.logIn, { scope: 'user_posts', return_scopes: true });
                     } else {
                         confirm('提醒，執行所有功能都要登入喔!!')
                     }
@@ -60,28 +60,37 @@ var fbHub = {
     },
     getFriends: function(response) {
         FB.api('/me/taggable_friends', function(response) {
-        var htmlData ="";
-        var jsonData ="";
-        var limit = 40;
-        var count =0;
-        for (var key in response.data){
-        if (count <= limit){
-            var friend = response.data[key];
-            var friend_name = friend.name;
-            var friend_image = friend.picture.data.url;
+            var htmlData = "";
+            var jsonData = "";
+            var limit = 40;
+            var count = 0;
+            for (var key in response.data) {
+                if (count <= limit) {
+                    var friend = response.data[key];
+                    var friend_name = friend.name;
+                    var friend_image = friend.picture.data.url;
 
-            htmlData += "<li class='friend-item'>";
-            htmlData += "<img src='" + friend_image +"'>";
-            htmlData += "<a>" + friend_name + "</a>";
-            htmlData += "</li>";
-            count ++;
-        }
+                    htmlData += "<li class='friend-item'>";
+                    htmlData += "<img src='" + friend_image + "'>";
+                    htmlData += "<a>" + friend_name + "</a>";
+                    htmlData += "</li>";
+                    count++;
+                }
 
-        }
-        $('.friends-list').html(htmlData);  
-    });
+            }
+            $('.friends-list').html(htmlData);
+        });
     },
     getMyFeeds: function(response) {
+        FB.api('/me/Feed', function(response) {
+            var htmlData = "";
+            for (var key in response.data) {
+                htmlData += "<pre>";
+                htmlData += key + " : " + response.data[key].message;
+                htmlData += "</pre>";
+            }
+             $('.feed-list').html(htmlData);
+        });
 
     }
 }

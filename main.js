@@ -1,7 +1,7 @@
 $(document).ready(function() {
-	fbHub.init();
+    fbHub.init();
     $('#logInFB').click(function() {
-    	fbHub.logIn(true);
+        fbHub.logIn(true);
     })
 
     $('#getMe').click(function() {
@@ -10,9 +10,15 @@ $(document).ready(function() {
         });
     });
 
-     $('#getFriends').click(function() {
+    $('#getFriends').click(function() {
         FB.getLoginStatus(function(response) {
             fbHub.getFriends(response);
+        });
+    });
+
+    $('#getMyFeeds').click(function() {
+        FB.getLoginStatus(function(response) {
+            fbHub.getMyFeeds(response);
         });
     });
 
