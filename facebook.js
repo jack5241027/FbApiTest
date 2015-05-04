@@ -32,24 +32,16 @@ var fbHub = {
                 if (response.status === 'connected') {
                     console.log('Logged in.');
                 } else if (router) {
-                    alert('提醒，執行所有功能都要登入喔!!')
+                    alert('��，執行��都要登��!!')
                 } else if (getIn) {
-                    FB.login(function(response) {}, {
-                        scope: 'publish_actions',
-                        return_scopes: true
-                    });
+                    FB.login(function(response) { }, { scope: 'user_posts', return_scopes: true });
                 } else {
-                    var res = confirm('你還沒登入喔!要幫你導向嗎?');
+                    var res = confirm('你�沒登��!要幫你��?');
                     if (res) {
                         router = true;
-                        FB.login(function(response) {
-                            fbHub.logIn;
-                        }, {
-                            scope: 'publish_actions',
-                            return_scopes: true
-                        });
+                        FB.login(fbHub.logIn, { scope: 'user_posts', return_scopes: true });
                     } else {
-                        confirm('提醒，執行所有功能都要登入喔!!')
+                        confirm('��，執行��都要登��!!')
                     }
                 }
             });
@@ -90,6 +82,15 @@ var fbHub = {
         });
     },
     getMyFeeds: function(response) {
+        FB.api('/me/Feed', function(response) {
+            var htmlData = "";
+            for (var key in response.data) {
+                htmlData += "<pre>";
+                htmlData += key + " : " + response.data[key].message;
+                htmlData += "</pre>";
+            }
+             $('.feed-list').html(htmlData);
+        });
 
     }
 }
