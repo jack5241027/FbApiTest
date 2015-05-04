@@ -1,0 +1,60 @@
+##Permissions
+
+> 使用者透過FB登入，進入APP，我們可以收到一些使用者存在FB的資料
+> Permissions 就是 我們 **詢問使用者**，是否可以使用這些資料 的 動作。
+
+> > 簡而言之 ：拿甚麼資料都要問他。
+
+> 可操作的資料 = 使用者隱私設定 + 同意我們取得的資料
+
+使用者同意後，除了我們詢問的資料外，
+會一併取得以下資訊，系統預設(但依使用者公開程度決定)
+> id
+name
+first_name
+last_name
+link
+gender
+locale
+timezone
+updated_time
+verified
+
+> > {
+  "id": "10203564158293237", 
+  "bio": "afsdfsdafsdy546456745y", 
+  "first_name": "Kai Hao", 
+  "gender": "male", 
+  "last_name": "Chan", 
+  "link": "https://www.facebook.com/app_scoped_user_id/10203564158293237/", 
+  "locale": "zh_TW", 
+  "name": "Kai Hao Chan", 
+  "timezone": 8, 
+  "updated_time": "2015-04-30T09:35:11+0000", 
+  "verified": true
+}
+![Alt logInWiithFB](images/logInWiithFB.png)
+
+ * 當取得的資料不只 email,  user_friend and public_profile，就要進行審核。
+ * 越多的權限要求，會導致使用者更不想使用應用程式，By FB。
+ * 幫使用者發文，會導致更多人不想使用。
+
+ > Guidelines FB
+ > 1. 只要求需要的
+ > 2. 要求跟內容有關的權限，會讓使用者比較好理解。
+ > 3. 盡量使用public_profile， **age_range** insteed **user_birthday** 
+ > 4. 分開讀取權限的請求，與推文權限請求；登入時**讀取**，另外等需要時再取得**推文**權限。
+ > 5. 不要要求自以為會用到的權限。
+ > 6. 告訴使用者要權限的原因。
+
+####不需審核的權限要求
+> 1. Public profile (default) permissions.
+> 2. App friends. -> **who also use your app.**
+> 3. Email permissions. 
+
+####審核一般來說三天，有些可能會到七天。
+> * Extended profile properties. -> 所有敏感資訊，可能是使用者的非公開檔案。
+> * Extended permissions -> 包含最敏感的個人資訊，其中一項是幫使用者發文；
+> > **所有擴充的權限要求，會跟登入流程分開呈現，可以讓使用者決定是否給予權限。**
+> * Open Graph permissions. -> 會將 "Open Graph data" 存進使用者檔案的權限。
+> * Page permissions. -> 取得 使用者 所經營的Facebook Pages 的管理權。
