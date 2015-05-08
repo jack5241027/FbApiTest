@@ -1,0 +1,381 @@
+##Permissions
+
+> 使用者透過FB登入，進入APP，我們可以收到一些使用者存在FB的資料
+> Permissions 就是 我們 **詢問使用者**，是否可以使用這些資料 的 動作。
+
+> > **簡而言之 ：拿甚麼資料都要問他。**
+
+> 可操作的資料 = 使用者隱私設定 + 同意我們取得的資料
+
+使用者同意後，除了我們詢問的資料外，
+會一併取得以下資訊，**系統預設**(但依使用者公開程度決定)
+> id
+name
+first_name
+last_name
+link
+gender
+locale
+timezone
+updated_time
+verified
+
+> > {
+  "id": "10203564158293237", 
+  "bio": "afsdfsdafsdy546456745y", 
+  "first_name": "Kai Hao", 
+  "gender": "male", 
+  "last_name": "Chan", 
+  "link": "https://www.facebook.com/app_scoped_user_id/10203564158293237/", 
+  "locale": "zh_TW", 
+  "name": "Kai Hao Chan", 
+  "timezone": 8, 
+  "updated_time": "2015-04-30T09:35:11+0000", 
+  "verified": true
+}
+![Alt logInWiithFB](images/logInWiithFB.png)
+
+ * 當取得的資料不只 email,  user_friend and public_profile，就要進行審核。
+ * 越多的權限要求，會有第二個要求權限視窗彈出，，會導致使用者更不想使用應用程式，By FB。
+ * 幫使用者發文，會導致更多人不想使用。
+
+ > Guidelines FB
+ > 1. 只要求需要的
+ > 2. 要求跟內容有關的權限，會讓使用者比較好理解。
+ > 3. 盡量使用public_profile， **age_range** insteed **user_birthday** 
+ > 4. 分開讀取權限的請求，與推文權限請求；登入時**讀取**，另外等需要時再取得**推文**權限。
+ > 5. 不要要求自以為會用到的權限。
+ > 6. 告訴使用者要權限的原因。
+
+####不需審核的權限要求
+> 1. Public profile (default) permissions.
+> 2. App friends. -> **who also use your app.**
+> 3. Email permissions. 
+
+####需審核的權限要求
+####審核一般來說三天，有些可能會到七天。
+> * Extended profile properties. -> 所有敏感資訊，可能是使用者的非公開檔案。
+> * Extended permissions -> 包含最敏感的個人資訊，其中一項是幫使用者發文；
+> > **所有擴充的權限要求，會跟登入流程分開呈現，可以讓使用者決定是否給予權限。**
+> * Open Graph permissions. -> 會將 "Open Graph data" 存進使用者檔案的權限。
+> * Page permissions. -> 取得 使用者 所經營的Facebook Pages 的管理權。
+-------------------------------------------------------------------------
+
+######public_profile (Default)
+* id
+* name
+* first_name
+* last_name
+* link
+
+> * gender - 
+> * locale - 使用的人/  同時使用的人兩人是朋友，想知道彼此locate / app透過key 或是 SSH認證
+
+> * timezone - 只能自己查詢自己
+> * verified - 只能自己查詢自己
+
+* updated_time
+
+-------------------------------------------------------------------------
+######user_friends
+* list of friends that also use your app - 同樣使用app的朋友名單
+* decided to share their list of friends with your app and not disabled that permission
+> 由使用者決定是否要**分享朋友名單**和**授權**
+
+* both friends must have been asked for user_friends during the login process.
+> 朋友也要授權才可!
+-------------------------------------------------------------------------
+######email
+*  primary email address
+
+-------------------------------------------------------------------------
+
+######user_about_me
+> #####Review
+* 'About Me' section on their Profile - 臉書檔案裡的關於我
+* Enhance a person's profile within your app -提高使用app的個人檔案完整性
+> > * **Don't Determine basic profile information**
+> > * 不要只是單純使用作為個人資訊使用
+
+-------------------------------------------------------------------------
+######user_birthday
+> #####Review
+> #####Please be clear as to why age_range is not sufficient for your use case.
+* 取得生日，但不一定有年，依使用者隱私權判定。
+> > * Determine whether a person says they are under 18, over 18 or over 21. Please use the age_range field which is provided as a part of the public_profile permission, for which no review is needed before use.
+> > * 只是想要判斷年紀區間，不需取得此權限。
+
+-------------------------------------------------------------------------
+######user_hometown
+> #####Review
+>  * 取得使用者參加的家鄉，非必填不一定拿的到
+>  > * 打造個人化經驗，基於使用者生長的地方。
+>  > * 幫助使用者聯繫同樣家鄉的人。
+-------------------------------------------------------------------------
+######user_likes
+> #####Review
+>  * 取得使用者所有的like，粉絲專業and應用程式。
+>  > * 打造個人化體驗，以使用者個人活動為基礎。
+>  > * 連結其他有相同喜和和經驗的人。
+>  > * 不能把 "like" 與否設為登入app的條件；或是某些內容需要like才能訪問。
+-------------------------------------------------------------------------
+######user_location
+> #####Review
+>  * 取得目前居住城市，非必填不一定拿的到
+>  > * 打造個人化體驗，以目前居住城市。
+>  > * 提供一些目前居住城市的相關內容。
+>  > * 幫助連結目前同住的人。
+-------------------------------------------------------------------------
+######user_photos
+> #####Review
+>  * 取得由使用者上傳或被tag的相片。
+>  > * 展示使用者的照片
+>  > * 幫助使用者輸出照片，僅限個人用途，非商業使用。
+>  > * 取得相片為了提高APP使用經驗。
+>  > * 取得使用者 更早之前的照片
+>  > * 以使用者權限，替使用者建立相簿。(上傳圖片，需要取得 publish_actions 權限).
+-------------------------------------------------------------------------
+######user_posts
+> #####Review
+>  * 取得由使用者動態時報上的貼文，任何。
+>  > * 從動態時報貼文中，產出一些新奇內容。
+>  > * 提供使用者依些有用的資訊，透過分析動態時報。
+>  > * 不允許(背景使用)在非公開狀態下使用。
+-------------------------------------------------------------------------
+######user_relationships
+> #####Review
+>  * 取得由使用者關係狀態，單身與否和其他家庭成員。
+>  > * 提供關於增進(加強身分)關係的內容。如：父親節時，po給父親們如何當個好爸爸的相關資訊。
+>  > * Reduce friction in utility apps that require relationship information such as Family Tree apps.
+>  > * 幫助使用者更輕易地使用，能獲取個人"關係資訊"的( Family Tree apps.)app。
+-------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+######user_actions.books
+> #####Review
+* includes books from any app they've read, want to read, rated or quoted.
+* 任何使用關於書籍的app 所發布的資訊 都可以取得，讀、想讀、重點、評分。
+> > * Personalize experience based on the books they've read ~.
+> > * 基於閱讀品味所衍生的個人化體驗。
+> > * Recommend books to read based on the books they've previously read.
+> > * 基於閱讀品味，推薦閱讀書籍。
+
+-------------------------------------------------------------------------
+######user_actions.fitness
+> #####Review
+* includes runs, walks and bikes actions.
+* 任何使用關於瘦身的app 所發布的資訊 都可以取得，跑步、走路、騎車。
+> > * Personalize a person's experience based on their fitness activity.
+> > * 基於瘦身習慣所產生的個人經驗。
+> > * Display a person's aggregate fitness activity over time..
+> > * 顯示一段時間內的總運動量
+> > * Show how someone's fitness activity compares to other people.
+> > * 顯示使用與其他使用者的的瘦身狀況比較。
+> > * Help people set and achieve personal fitness goals.
+> > * 幫助使用者設定瘦身目標
+
+-------------------------------------------------------------------------
+######user_actions.music
+> #####Review
+* includes songs they've listened to, and playlists they've created.
+* 任何使用關於音樂的app 所發布的資訊 都可以取得，聽甚麼還有創建的播放清單。
+> > * Recommend people music .
+> > * 推薦音樂。
+> > * Connect people with concerts/events and other content based on what they've listened to.
+> > * 透過活動或音樂會，連結有相同音樂喜好的人。
+> > * Help people understand what their top artists and albums are.
+> > * 幫助人們了解該領域的頂尖藝術家和專輯。
+
+-------------------------------------------------------------------------
+######user_actions.news
+> #####Review
+* includes news articles they've read or news articles they've published.
+* 任何使用關於新聞的app 所發布的資訊 都可以取得，使用者**讀過**的和**分享**的。
+> > * Surfacing relevant books, articles or events, visibly providing a more tailored content experience.
+> > * 透過使用者感興趣的相關書、文章、活動，提供更量身訂製的體驗。
+> > * Personalize a person's experience based on their news activity.
+> > * 基於新聞活動，使 使用經驗個人化。
+
+-------------------------------------------------------------------------
+######user_actions.video
+> #####Review
+* Includes videos they've watched, videos they've rated and videos they want to watch.
+* 任何使用關於影片的app 所發布的資訊都可以取得，使用者**看過**、**評分過**、**想看**。
+> > * Surfacing videos, movies and TV shows the person has interacted with, visibly providing a more tailored content experience.
+> > * 透過使用者感興趣的影片、電影、電視節目，提供更量身訂製的體驗。
+> > * Personalize a person's experience based on the movies, TV shows and videos they've watched.
+> > * 基於看過的電影、電視和影片，使 使用經驗個人化。
+
+-------------------------------------------------------------------------
+######user_actions:{app_namespace}
+> #####Review
+> Provides access to all of the person's custom Open Graph actions in the given app.
+* 取得使用者，使用{提供的APP}的習慣。
+-------------------------------------------------------------------------
+######user_education_history
+> #####Review
+> * 取得教育背景
+>  > * Surface content of relevance to alumni.
+>  > * 透過教育背景尋找老古頭
+>  > * Help people connect with other people with a common education history.
+>  > * 幫助人們連結相同教育背景
+>  > * **不允許**，無法被明用在app上的運算。
+
+-------------------------------------------------------------------------
+######user_events
+> #####Review
+>  * Provides read-only access to the Events a person is hosting or has RSVP'd to.
+>  * 可以取得使用者，回復要參加或舉辦的活動。
+>  > * 幫使用者減少行程卡到的狀況。
+>  > * **不允許**，透過應用程式，建立事件。
+>  > * 幫助使用者透過我們提供的服務"回覆參加"時，請使用 **rsvp_event** permission.
+-------------------------------------------------------------------------
+######user_games_activity
+> #####Review
+>  * Provides access to read a person's game activity (scores, achievements) in any game the person has played.
+>  * 可以取得使用者，玩過的遊戲的分數或成就。
+>  > * 提供直觀的遊戲成績列表，或是產生針對該遊戲產生API。
+>  > * *不允許**，應用不明的操作。
+-------------------------------------------------------------------------
+######user_groups
+> #####Review
+>  * read the Groups a person is a member
+>  * 取得使用者參加的社團
+>  > * *不允許**，創建社團。
+>  > * *只允許*，FB的品牌客戶。
+-------------------------------------------------------------------------
+
+######user_managed_groups
+> #####Review
+>  * 取得由使用者擔任管理員的社團，不能透過app以管理者身分創社團，只能以member身分觀看。
+>  > * 提供使用者管理社團的介面。
+>  > * 可代替使用者在社團貼文。 (需要取得 publish_actions 權限).
+>  > * 不允許(背景使用)在非公開狀況下使用此資料。
+-------------------------------------------------------------------------
+######user_relationship_details
+> #####Review
+>  * 取得由使用者感興趣的對象。
+>  > * 提供量身訂製的內容。
+-------------------------------------------------------------------------
+######user_religion_politics
+> #####Review
+>  * 取得由使用者，宗教與政治傾向。
+>  > * 提供相關宗教和政治傾向內容。
+>  > * 幫助連結同樣傾向的人。
+-------------------------------------------------------------------------
+######user_status
+> #####Review
+>  * 取得由使用者，(僅限)近況更新，不包含連結，影片、和相片。
+>  > * 從動態時報貼文中，產出一些新奇內容。
+>  > * 提供使用者依些有用的資訊，透過分析動態時報。
+>  > * 不允許(背景使用)在非公開狀態下使用。
+-------------------------------------------------------------------------
+######user_tagged_places
+> #####Review
+>  * 取得由使用者被標註的相片、影片、近況更新、連結。
+>  > * 提供量身訂製的內容。
+>  > * 推薦使用者造訪曾被標記的去所。
+>  > * 在地圖上顯示曾打卡的地點。
+-------------------------------------------------------------------------
+######user_videos
+> #####Review
+>  * 取得由使用者被標註的和上傳的影片。
+>  > * 利用影片加強使用app體驗。
+>  > * 置頂展示影片，或在數位串流上展示影片。
+-------------------------------------------------------------------------
+######user_website
+> #####Review
+>  * 取得由使用者個人網站
+>  > * 幫助使用者更輕易地使用，能獲取個人網站資訊的(portfolio, resume or business)app。
+-------------------------------------------------------------------------
+######user_work_history
+> #####Review
+>  * 取得由使用者工作經歷和雇主。
+>  > * 提供相關內容。
+>  > * 幫助產生連結。
+>  > * 禁止背景操作。
+-------------------------------------------------------------------------
+
+
+
+
+#Extended Permissions
+(Second step)
+
+######publish_actions
+> #####Review
+>  * 取得公開貼文權限，使用者可透過APP發文。
+>  > * 讓使用者透過自訂的套件發文。
+>  > * 隨時點讚跟評論，像是有人在管理。
+>  > * 禁止在未通知的狀況下自動發文。
+>  > * Share dialog(), Feed Dialog, Message Dialog, the Like Button ->不需要申請此權限。
+>  > * 禁止預設任何文字內容，即使使用者可以刪除。
+
+** 參考 **
+https://developers.facebook.com/policy
+https://developers.facebook.com/docs/apps/review/prefill
+
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+######read_custom_friendlists
+> #####Review
+>  * 取得使用者的自訂朋友群組的名稱。
+>  > * 取得朋友名單請用， user_friends permission.
+>  > * 不能透過此項權限，邀請朋友使用app。
+>  > * 當使用者透過app發文時，提供有效的閱讀權限篩選器。
+-------------------------------------------------------------------------
+######read_insights
+> #####Review
+>  * 取得使用者的分析資料，包含粉絲專業，應用程式和網域。
+>  > * 將Facebook's app, page or domain insights使用在分析工具上
+>  > * 不能賣，也不能做一些背景運算。
+-------------------------------------------------------------------------
+######read_mailbox
+> #####Review
+>  * 讀使用者私訊。
+>  > * 僅限FB品牌客戶。
+-------------------------------------------------------------------------
+######read_page_mailboxes
+> #####Review
+>  * 讀粉專私訊。
+>  > * 不能讀到粉專擁有者的訊息。
+>  > * 幫助管理粉專訊息。
+-------------------------------------------------------------------------
+######read_stream
+> #####Review
+>  * 讀取使用者最新貼文或者最新的檔案更新。
+>  > * 僅限FB品牌客戶。
+-------------------------------------------------------------------------
+######manage_notifications
+> #####Review
+>  * 擁有讀取使用者通知的權限
+>  > * 僅限FB品牌客戶。
+-------------------------------------------------------------------------
+######manage_pages
+> #####Review
+>  * 拿到使用者的粉專的管理權限。
+>  * App 還需要 publish_pages 的權限，就可以在粉專發文。
+>  * https://developers.facebook.com/docs/graph-api/reference/v2.3/page/feed
+>  * 可透過送審"增加開發者"的方式，簡化FB在權限上的審核。
+>  * 確保流程要簡單透明，方便審核。
+>  > * 幫助使用者發布推聞到他們管理的粉絲專業，也需要拿到 publish_pages 
+>  > * 幫助管理粉絲專業
+-------------------------------------------------------------------------
+######publish_pages
+> #####Review
+>  * 粉專貼文權限，同時擁有 manage_pages ，使APP可完全代替使用者管理 粉專。
+>  > * 讓使用者透過自訂的套件發文。
+>  > * 即時點讚跟評論，像是有人在管理。
+>  > * 禁止在未通知的狀況下自動推文
+>  > * 禁止預設任何文字內容，即使使用者可以刪除。
+-------------------------------------------------------------------------
+
+######rsvp_event
+> #####Review
+>  * 幫助使用者回覆是否參加事件。 (e.g. attending, maybe, or declined).
+>  不能邀請人參加活動
+>  不能更新事件資訊
+>  不能創建活動
+>  > * 幫助使用者更輕易管理事件和行事曆資訊。
+-------------------------------------------------------------------------
