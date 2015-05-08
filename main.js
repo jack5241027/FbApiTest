@@ -10,7 +10,7 @@ $(document).ready(function() {
         });
     });
 
-    $('#getFriends').click(function() {
+    $('#getMyFriends').click(function() {
         FB.getLoginStatus(function(response) {
             fbHub.getFriends(response);
         });
@@ -21,5 +21,17 @@ $(document).ready(function() {
             fbHub.getMyFeeds(response);
         });
     });
+    $('#postFeeds').click(function() {
+        FB.getLoginStatus(function(response) {
+            fbHub.postFeeds(response);
+        });
+    });
 
+    $(document).on('click', '.tagId', function(event) {
+        if ($(this).prop("checked")) {
+            var friendName = $(this).prev().text();
+            fbHub.tagListAry.push(fbHub.tagFriendListAry[friendName]);
+            console.log(fbHub.tagFriendListAry[friendName]);
+        }
+    });
 });
